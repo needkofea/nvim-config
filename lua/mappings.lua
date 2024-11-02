@@ -15,6 +15,12 @@ function CloseAndSwitch()
   end
 end
 
+function formatFile()
+  require("conform").format()
+end
+
+vim.api.nvim_create_user_command("Format", formatFile, {desc="Format the current buffer using conform"})
+
 vim.api.nvim_set_keymap('n', '<C-F4>', ':lua CloseAndSwitch()<CR>', { noremap = true, silent = true })
 
 
@@ -63,6 +69,7 @@ vim.api.nvim_set_keymap('n', '<C-Z>', 'u', { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('i', '<C-V>', '<C-O>"+gP', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-Z>', '<C-O>"u', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-Z>', '<Esc>"u', { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('v', '<C-C>', '"+y', { noremap = true, silent = true })
 -----------------------------------------------
@@ -84,7 +91,20 @@ vim.api.nvim_set_keymap('i', '<A-Right>', '<C-o>:bnext<CR>', { noremap = true, s
 vim.api.nvim_set_keymap('i', '<C-S-p>', '<Esc>', { noremap = true, silent = true })
 -- Duplicate line --
 vim.api.nvim_set_keymap('i', '<C-d>', '<Esc>:t.<Enter>i', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-d>', '<Esc>:t.<Enter>i', { noremap = true, silent = true })
 
+-- Comment Toggle --
+vim.api.nvim_set_keymap('n', '<C-/>', 'gcc', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-/>', '<Esc>gcc', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-/>', '<Esc>gcc', { noremap = true, silent = true })
+
+
+-- Format file --
+vim.api.nvim_set_keymap('i', '<S-A-f>','<Esc>:Format<Enter>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<S-A-f>','<Esc>:Format<Enter>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<S-A-f>',':Format<Enter>', { noremap = true, silent = true })
+
+-- 
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
