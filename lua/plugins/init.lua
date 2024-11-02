@@ -14,17 +14,23 @@ return {
   },
 
   {
-  	"nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter",
     opts = {
-  	  ensure_installed = {
-  			"vim", "lua", "vimdoc",
-        "html", "css"
-  		},
-  	},
+      ensure_installed = {
+        "vim",
+        "lua",
+        "vimdoc",
+        "html",
+        "css",
+      },
+    },
   },
   {
-	'stevearc/conform.nvim',
-	  opts = {},
-  }
-
+    "stevearc/conform.nvim",
+    opts = {},
+  },
+  -- {
+  --   "andweeb/presence.nvim",
+  --   lazy = false,
+  -- },
 }

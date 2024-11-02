@@ -90,14 +90,13 @@ vim.api.nvim_set_keymap('i', '<A-Right>', '<C-o>:bnext<CR>', { noremap = true, s
 -- Command Mode --
 vim.api.nvim_set_keymap('i', '<C-S-p>', '<Esc>', { noremap = true, silent = true })
 -- Duplicate line --
-vim.api.nvim_set_keymap('i', '<C-d>', '<Esc>:t.<Enter>i', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-d>', '<Esc>:t.<Enter>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-d>', '<Esc>:t.<Enter>i', { noremap = true, silent = true })
 
 -- Comment Toggle --
-vim.api.nvim_set_keymap('n', '<C-/>', 'gcc', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-/>', '<Esc>gcc', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<C-/>', '<Esc>gcc', { noremap = true, silent = true })
-
+vim.api.nvim_set_keymap('n', '<C-/>', 'gcc', { noremap = false, silent = true })
+vim.api.nvim_set_keymap('i', '<C-/>', '<Esc>gcci', { noremap = false, silent = true })
+vim.api.nvim_set_keymap('v', '<C-/>', 'gc<CR>', { noremap = false, silent = true })
 
 -- Format file --
 vim.api.nvim_set_keymap('i', '<S-A-f>','<Esc>:Format<Enter>', { noremap = true, silent = true })

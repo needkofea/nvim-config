@@ -25,7 +25,7 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
-require("conform").setup({
+require("conform").setup {
   formatters_by_ft = {
     lua = { "stylua" },
     -- Conform will run multiple formatters sequentially
@@ -35,7 +35,16 @@ require("conform").setup({
     -- Conform will run the first available formatter
     javascript = { "prettierd", "prettier", stop_after_first = true },
   },
-})
+}
+-- require("presence"):setup {
+--   auto_update = true,
+--   neovim_image_text = "The best ide",
+--   main_image = "neovim",
+--   editing_text = "Editing %s",
+--   file_explorer_text = "Browsing files",
+--   reading_text = "Reading %s",
+--   workspace_text = "Working on %s",
+-- }
 
 -- load theme
 dofile(vim.g.base46_cache .. "defaults")
@@ -52,10 +61,10 @@ if vim.g.neovide then
   vim.o.guifont = "JetBrainsMono Nerd Font"
   ---- Ctrl + S to  Save ----
   -- Normal mode
-  vim.api.nvim_set_keymap('n', '<C-S>', ':w<CR>', { noremap = true, silent = true })
-  -- Visual mode 
-  vim.api.nvim_set_keymap('v', '<C-S>', ':w<CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap("n", "<C-S>", ":w<CR>", { noremap = true, silent = true })
+  -- Visual mode
+  vim.api.nvim_set_keymap("v", "<C-S>", ":w<CR>", { noremap = true, silent = true })
   -- Insert mode
-  vim.api.nvim_set_keymap('i', '<C-S>', '<C-O>:w<CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap("i", "<C-S>", "<C-O>:w<CR>", { noremap = true, silent = true })
   ---------------------------
 end
