@@ -29,6 +29,12 @@ return {
     "stevearc/conform.nvim",
     opts = {},
   },
+  {
+    "nanotee/zoxide.vim",
+    lazy = false,
+  },
+  -- { "nvim-lua/plenary.nvim" },
+  -- { "cljoly/telescope-repo.nvim" },
   -- {
   --   "andweeb/presence.nvim",
   --   lazy = false,

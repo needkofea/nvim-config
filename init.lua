@@ -36,6 +36,8 @@ require("conform").setup {
     javascript = { "prettierd", "prettier", stop_after_first = true },
   },
 }
+
+-- require("telescope").load_extension "repo"
 -- require("presence"):setup {
 --   auto_update = true,
 --   neovim_image_text = "The best ide",
