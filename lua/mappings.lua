@@ -87,7 +87,8 @@ vim.api.nvim_set_keymap("n", "<A-Right>", ":bnext<CR>", { noremap = true, silent
 vim.api.nvim_set_keymap("i", "<A-Left>", "<C-o>:bprevious<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<A-Right>", "<C-o>:bnext<CR>", { noremap = true, silent = true })
 -- Command Mode --
-vim.api.nvim_set_keymap("i", "<C-S-p>", "<Esc>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<C-S-p>", "<Esc>:", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-S-p>", "<Esc>:", { noremap = true, silent = true })
 -- Duplicate line --
 vim.api.nvim_set_keymap("n", "<C-d>", "<Esc>:t.<Enter>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<C-d>", "<Esc>:t.<Enter>i", { noremap = true, silent = true })
