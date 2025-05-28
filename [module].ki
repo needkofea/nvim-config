@@ -1,0 +1,5 @@
+name = "NeedKofea's Nvim Config"
+desc = "NeedKofea's Nvim Config"
+
+[install]
+to="${CONFIG_LOCAL}"
