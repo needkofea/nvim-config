@@ -1,4 +1,4 @@
-id = "nvim"
+id = "nvim-test"
 name = "NeedKofea's Nvim Config"
 desc = "NeedKofea's Nvim Config"
 excludes = [
