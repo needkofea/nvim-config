@@ -1,9 +1,11 @@
-id = "nvim"
+id = "needkofea.config.nvim"
 name = "NeedKofea's Nvim Config"
 desc = "NeedKofea's Nvim Config"
 excludes = [
     ".git/*",
+    ".gitignore",
 ]
 
 [install]
+as="nvim"
 to="${CONFIG_LOCAL}"
