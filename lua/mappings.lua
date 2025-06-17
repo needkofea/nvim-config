@@ -4,110 +4,89 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
+map("i", "jk", "<Esc>", { desc = "Exit insert mode (Vim style)" })
+map("i", "kj", "<Esc>", { desc = "Exit insert mode (Vim style alt)" })
+
+
 map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>")
 
-function CloseAndSwitch()
-  local current_buf = vim.fn.bufnr "%"
-  vim.cmd "bdelete"
-  if vim.fn.bufexists(current_buf) then
-    vim.cmd "bnext"
-  end
-end
+-- Ctrl+S to save (works in normal and insert mode)
+map({"n", "i", "v"}, "<C-s>", "<cmd>w<CR><Esc>", { desc = "Save file" })
 
-function formatFile()
-  require("conform").format()
-end
+-- Ctrl+Z for undo, Ctrl+Y for redo
+map("n", "<C-z>", "u", { desc = "Undo" })
+map("n", "<C-y>", "<C-r>", { desc = "Redo" })
+map("i", "<C-z>", "<C-o>u", { desc = "Undo in insert mode" })
 
-vim.api.nvim_create_user_command("Format", formatFile, { desc = "Format the current buffer using conform" })
+-- Ctrl+A to select all
+map("n", "<C-a>", "ggVG", { desc = "Select all" })
 
-vim.api.nvim_set_keymap("n", "<C-F4>", ":lua CloseAndSwitch()<CR>", { noremap = true, silent = true })
 
--- CTRL SHIFT SELECTION IN NORMAL AND INSERT MODE --
-vim.api.nvim_set_keymap("n", "<C-S-Right>", "vw", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-S-Left>", "vb", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-S-Up>", "vk", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-S-Down>", "vj", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<S-Right>", "vl", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-Left>", "vh", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-Up>", "vk", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-Down>", "vj", { noremap = true, silent = true })
+-- Ctrl+C, Ctrl+V, Ctrl+X (system clipboard)
+map("v", "<C-c>", '"+y', { desc = "Copy to clipboard" })
+map({"n", "v"}, "<C-v>", '"+p', { desc = "Paste from clipboard" })
+map("v", "<C-x>", '"+d', { desc = "Cut to clipboard" })
 
-vim.api.nvim_set_keymap("n", "<S-Home>", "v<Home>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-End>", "v<End>", { noremap = true, silent = true })
+-- Insert mode paste
+map("i", "<C-v>", '<C-r>+', { desc = "Paste in insert mode" })
 
-vim.api.nvim_set_keymap("i", "<C-S-Right>", "<C-O>vw", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<C-S-Left>", "<C-O>vb", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<C-S-Up>", "<C-O>vk", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<C-S-Down>", "<C-O>vj", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("i", "<S-Right>", "<C-O>vl", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-Left>", "<C-O>vh", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-Up>", "<C-O>vk", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-Down>", "<C-O>vj", { noremap = true, silent = true })
+-- Alt+Up/Down to move lines
+map("n", "<A-Up>", ":m .-2<CR>==", { desc = "Move line up" })
+map("n", "<A-Down>", ":m .+1<CR>==", { desc = "Move line down" })
+map("v", "<A-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+map("v", "<A-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 
-vim.api.nvim_set_keymap("i", "<S-Home>", "<C-O>v<Home>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-End>", "<C-O>v<End>", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("v", "<C-S-Right>", "l", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<C-S-Left>", "h", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<C-S-Up>", "k", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<C-S-Down>", "vj", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("v", "<S-Right>", "l", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<S-Left>", "h", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<S-Up>", "k", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<S-Down>", "j", { noremap = true, silent = true })
 
-------------------------------------------------------
+-- Ctrl+F for search
+map("n", "<C-f>", "/", { desc = "Search" })
 
--- COPY PASTE UNDO IN NORMAL AND INSERT MODE --
-vim.api.nvim_set_keymap("n", "<C-V>", '"+gP', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-Z>", "u", { noremap = true, silent = true })
+-- Tab and Shift+Tab for indentation in visual &normal  mode
+map("v", "<Tab>", ">gv", { desc = "Indent" })
+map("v", "<S-Tab>", "<gv", { desc = "Outdent" })
+map("n", "<Tab>", "V>gv<ESC>", { desc = "Indent" })
+map("n", "<S-Tab>", "V<gv<ESC>", { desc = "Outdent" })
 
-vim.api.nvim_set_keymap("i", "<C-V>", '<C-O>"+gP', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<C-Z>", '<C-O>"u', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<C-Z>", '<Esc>"u', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("v", "<C-C>", '"+y', { noremap = true, silent = true })
------------------------------------------------
+-- ==== Text Selection ====
+-- Normal mode: start visual selection with Shift+Arrow
+map("n", "<S-Up>", "v<Up>", opts)
+map("n", "<S-Down>", "v<Down>", opts)
+map("n", "<S-Left>", "v<Left>", opts)
+map("n", "<S-Right>", "v<Right>", opts)
 
--- Indentation --
-vim.api.nvim_set_keymap("v", "<Tab>", ">", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<Tab>", "v>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<Tab>", "<Esc>v>", { noremap = true, silent = true })
+-- Visual mode: extend selection with Shift+Arrow
+map("v", "<S-Up>", "<Up>", opts)
+map("v", "<S-Down>", "<Down>", opts)
+map("v", "<S-Left>", "<Left>", opts)
+map("v", "<S-Right>", "<Right>", opts)
 
-vim.api.nvim_set_keymap("v", "<S-Tab>", "<", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-Tab>", "v<", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-Tab>", "<Esc>v<", { noremap = true, silent = true })
--- Tab Switching --
-vim.api.nvim_set_keymap("n", "<A-Left>", ":bprevious<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<A-Right>", ":bnext<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<A-Left>", "<C-o>:bprevious<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<A-Right>", "<C-o>:bnext<CR>", { noremap = true, silent = true })
--- Command Mode --
-vim.api.nvim_set_keymap("i", "<C-S-p>", "<Esc>:", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-S-p>", "<Esc>:", { noremap = true, silent = true })
--- Duplicate line --
-vim.api.nvim_set_keymap("n", "<C-d>", "<Esc>:t.<Enter>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<C-d>", "<Esc>:t.<Enter>i", { noremap = true, silent = true })
 
--- Comment Toggle --
-vim.api.nvim_set_keymap("n", "<C-/>", "gcc", { noremap = false, silent = true })
-vim.api.nvim_set_keymap("i", "<C-/>", "<Esc>gcci", { noremap = false, silent = true })
-vim.api.nvim_set_keymap("v", "<C-/>", "gc<CR>", { noremap = false, silent = true })
+-- ===== VSCODE-LIKE LSP MAPPINGS =====
 
--- Format file --
-vim.api.nvim_set_keymap("i", "<S-A-f>", "<Esc>:Format<Enter>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<S-A-f>", "<Esc>:Format<Enter>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-A-f>", ":Format<Enter>", { noremap = true, silent = true })
+-- F2 for rename
+map("n", "<F2>", vim.lsp.buf.rename, { desc = "Rename symbol" })
 
----- Ctrl + S to  Save ----
-vim.api.nvim_set_keymap("n", "<C-S>", ":w<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<C-S>", ":w<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<C-S>", "<C-O>:w<CR>", { noremap = true, silent = true })
+-- F12 for go to definition
+map("n", "<F12>", vim.lsp.buf.definition, { desc = "Go to definition" })
 
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+-- Ctrl+Click simulation with Ctrl+]
+map("n", "<C-]>", vim.lsp.buf.definition, { desc = "Go to definition" })
 
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+-- Shift+F12 for find references
+map("n", "<S-F12>", vim.lsp.buf.references, { desc = "Find references" })
+
+-- Ctrl+. for code actions
+map("n", "<C-.>", vim.lsp.buf.code_action, { desc = "Code actions" })
+
+-- Ctrl+Space for completion trigger
+map("i", "<C-Space>", "<C-x><C-o>", { desc = "Trigger completion" })
+
+
+
+-- Home and End keys behaviors
+map({"n", "v"}, "<Home>", "^", { desc = "Go to first non-blank character" })
+map({"n", "v"}, "<End>", "$", { desc = "Go to end of line" })
